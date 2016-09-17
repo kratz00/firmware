@@ -9,7 +9,7 @@ rm /tmp/fastd_${project}_peers/*
 count=0
 # get fastd peers
 pubkey=$(echo "secret \"$(uci get fastd.fff.secret)\";" | fastd -c - --show-key --machine-readable)
-wget -T15 "http://keyserver.freifunk-franken.de/${project}/geo.php?mac=$mac&name=$hostname&port=$port&key=$pubkey&lat=$lat&long=$long" -O /tmp/fastd_${project}_output
+curl -m 15 "http://keyserver.freifunk-franken.de/${project}/geo.php?mac=$mac&name=$hostname&port=$port&key=$pubkey&lat=$lat&long=$long" -o /tmp/fastd_${project}_output
 filecounts=$(awk '/^####/ { gsub(/^####/, "", $0); gsub(/.conf/, "", $0); print $0; }' /tmp/fastd_${project}_output)
 for file in $filecounts; do
     awk "{ if(a) print }; /^####$file.conf$/{a=1}; /^$/{a=0};" /tmp/fastd_${project}_output | sed 's/ float;/;/g' > /etc/fastd/$project/peers/$file
@@ -17,7 +17,7 @@ for file in $filecounts; do
 
     # ask for Broker and select the tunnel
     IP=$(awk -F\" '/remote/ {print $2}' /etc/fastd/${project}/peers/$file)
-    if [ "l2tp" = "$(wget -T10 $IP/vpn.txt -O - 2>/dev/null)" ]; then
+    if [ "l2tp" = "$(curl -m 10 $IP/vpn.txt -o - 2>/dev/null)" ]; then
         # Gateway offers l2tp
         FDPORT=$(awk '/remote/{gsub(";", ""); print $5}' /etc/fastd/${project}/peers/$file)
         L2PORT=$((FDPORT + 10000))

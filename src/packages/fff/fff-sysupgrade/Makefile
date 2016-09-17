@@ -13,7 +13,7 @@ define Package/fff-sysupgrade
     CATEGORY:=Freifunk
     TITLE:=Freifunk-Franken sysupgrade
     URL:=http://www.freifunk-franken.de
-    DEPENDS:=+fff-boardname +micrond +@BUSYBOX_CONFIG_WGET
+    DEPENDS:=+fff-boardname +micrond +@PACKAGE_curl
 endef
 
 define Package/fff-sysupgrade/description

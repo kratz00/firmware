@@ -13,7 +13,7 @@ define Package/fff-vpn-select
     CATEGORY:=Freifunk
     TITLE:= Freifunk-Franken vpn-select
     URL:=http://www.freifunk-franken.de
-    DEPENDS:=+@BUSYBOX_CONFIG_FEATURE_WGET_TIMEOUT \
+    DEPENDS:=+@PACKAGE_curl \
              +fff-tunneldigger \
              +fff-fastd
 endef

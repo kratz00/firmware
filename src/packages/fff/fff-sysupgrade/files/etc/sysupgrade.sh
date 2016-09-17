@@ -34,7 +34,7 @@ case $BOARD in
         BOARD="wr841-v11" ;;
 esac
 
-wget "${UPGRADE_PATH}/release.nfo"
+curl -O "${UPGRADE_PATH}/release.nfo"
 if [ ! -f release.nfo ]; then
   echo -ne "Latest release information not found. Please try to update manually.\n\n"
   exit 1
@@ -73,8 +73,8 @@ fi
 
 FILE="${FIRMWARE_COMMUNITY}-${VERSION}-${SOC}-g-${BOARD}-squashfs-sysupgrade.bin"
 echo -ne "Downloading $FILE\n\n"
-wget "${UPGRADE_PATH}/${FILE}"
-wget "${UPGRADE_PATH}/${FILE}.sha256"
+curl -O "${UPGRADE_PATH}/${FILE}"
+curl -O "${UPGRADE_PATH}/${FILE}.sha256"
 
 echo -ne "\ndone. Comparing sha256 sums: "
 sha256sum -c ${FILE}.sha256

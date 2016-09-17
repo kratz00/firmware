@@ -21,7 +21,7 @@ if uci get system.@system[0].latitude && uci get system.@system[0].longitude; th
 fi
 
 #Get Router from Netmon Database
-xml_data=$( wget -q -O - "http://fe80::ff:feee:1%br-mesh/api/rest/api.php?rquest=router&mac=${mac//:}" 2>&1)
+xml_data=$(curl "http://fe80::ff:feee:1%br-mesh/api/rest/api.php?rquest=router&mac=${mac//:}" 2>&1)
 
 if [ -z "$xml_data" ]; then
 	echo "xml_data is not set"
